@@ -34,9 +34,38 @@ type ListNode struct {
 }
 
 func main() {
-	var task string = "1"
+	var task string = "1-2-3"
 	//printList(buildList(task))
-	println(task, isPalindrome(buildList(task)))
+	println(task, xisPalindrome(buildList(task)))
+	task = "1"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-1"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2-2-1"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2-3-2-1"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2-1"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2-3"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-2-3-4"
+	println(task, xisPalindrome(buildList(task)))
+
+	task = "1-1-2-1"
+	println(task, xisPalindrome(buildList(task)))
 }
 
 func buildList(values string) *ListNode {
@@ -46,12 +75,12 @@ func buildList(values string) *ListNode {
 		if values[i] != '-' {
 			tmpVal = string(values[i]) + tmpVal
 		} else {
-			println(tmpVal)
+			//println(tmpVal)
 			currentNode = createNewNode(tmpVal, currentNode)
 			tmpVal = ""
 		}
 	}
-	println(tmpVal)
+	//println(tmpVal)
 	currentNode = createNewNode(tmpVal, currentNode)
 	return currentNode
 }
@@ -84,16 +113,14 @@ func isPalindrome(head *ListNode) bool {
 	println("List Length is ", listLen)
 
 	var secondHead *ListNode
-	if listLen%2 != 0 {
-		return false
-	} else if listLen > 2 {
+	if listLen > 2 {
 		//revert second part from middle
 		var prevNode *ListNode
 		var nextNode *ListNode
 		currentNode = head
 		println("revert")
 		for i := 0; currentNode.Next != nil; i++ {
-			println(currentNode.Val)
+			//println(currentNode.Val)
 			if i == listLen/2-1 {
 				nextNode = currentNode.Next.Next
 				currentNode.Next.Next = nil
@@ -123,16 +150,20 @@ func isPalindrome(head *ListNode) bool {
 	printList(secondHead)
 
 	// compare 2 parts one by one
-	if listLen > 2 {
+	if listLen/2 >= 2 {
 		currentNode = head
 		secondCurrentNode := secondHead
 		for currentNode.Next != nil {
+			//println(currentNode.Val, secondCurrentNode.Val)
 			if currentNode.Val == secondCurrentNode.Val {
 				secondCurrentNode = secondCurrentNode.Next
 				currentNode = currentNode.Next
 			} else {
 				return false
 			}
+		}
+		if currentNode.Val != secondCurrentNode.Val {
+			return false
 		}
 	} else if secondHead.Val == head.Val {
 		return true
@@ -154,14 +185,14 @@ func xisPalindrome(head *ListNode) bool {
 	}
 
 	var secondHead *ListNode
-	if listLen%2 != 0 {
-		return false
-	} else if listLen > 2 {
+	if listLen > 2 {
 		//revert second part from middle
 		var prevNode *ListNode
 		var nextNode *ListNode
 		currentNode = head
+
 		for i := 0; currentNode.Next != nil; i++ {
+
 			if i == listLen/2-1 {
 				nextNode = currentNode.Next.Next
 				currentNode.Next.Next = nil
@@ -181,14 +212,16 @@ func xisPalindrome(head *ListNode) bool {
 		}
 		secondHead = currentNode
 		secondHead.Next = prevNode
-	} else {
+	} else if listLen == 2 {
 		//only 2 nodes
 		secondHead = head.Next
 		head.Next = nil
+	} else if listLen == 1 {
+		return true
 	}
 
 	// compare 2 parts one by one
-	if listLen > 2 {
+	if listLen/2 >= 2 {
 		currentNode = head
 		secondCurrentNode := secondHead
 		for currentNode.Next != nil {
@@ -198,6 +231,10 @@ func xisPalindrome(head *ListNode) bool {
 			} else {
 				return false
 			}
+		}
+
+		if currentNode.Val != secondCurrentNode.Val {
+			return false
 		}
 	} else if secondHead.Val == head.Val {
 		return true
