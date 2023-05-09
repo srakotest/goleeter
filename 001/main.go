@@ -36,36 +36,36 @@ type ListNode struct {
 func main() {
 	var task string = "1-2-3"
 	//printList(buildList(task))
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 	task = "1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-2-1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-3-2-1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-3"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-3-4"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 
 	task = "1-1-2-1"
-	println(task, xisPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))
 }
 
 func buildList(values string) *ListNode {
@@ -88,11 +88,15 @@ func buildList(values string) *ListNode {
 func printList(head *ListNode) {
 	currentNode := head
 	println("printList")
+	if currentNode == nil {
+		println("List is empty")
+		return
+	}
 	for currentNode.Next != nil {
-		print(*&currentNode.Val, "-")
+		print(currentNode.Val, "-")
 		currentNode = currentNode.Next
 	}
-	println(*&currentNode.Val)
+	println(currentNode.Val)
 }
 
 func createNewNode(value string, nextNode *ListNode) *ListNode {
@@ -140,10 +144,12 @@ func isPalindrome(head *ListNode) bool {
 		}
 		secondHead = currentNode
 		secondHead.Next = prevNode
-	} else {
+	} else if listLen == 2 {
 		//only 2 nodes
 		secondHead = head.Next
 		head.Next = nil
+	} else if listLen == 1 {
+		return true
 	}
 
 	printList(head)
@@ -242,5 +248,44 @@ func xisPalindrome(head *ListNode) bool {
 		return false
 	}
 
+	return true
+}
+
+func isPalindromeGpt(head *ListNode) bool {
+	// Сперва определим длину списка.
+	length := 0
+	node := head
+	for node != nil {
+		length++
+		node = node.Next
+	}
+
+	// Затем разделим список на две части. Если длина списка нечетная, то
+	// средний элемент будет находиться в первой части.
+
+	node = head
+	for i := 0; i < length/2; i++ {
+		node = node.Next
+	}
+
+	// Развернем вторую часть списка.
+	var prev *ListNode
+	for node != nil {
+		next := node.Next
+		node.Next = prev
+		prev = node
+		node = next
+	}
+
+	// Сравним первую и вторую части списка.
+	for i := 0; i < length/2; i++ {
+		if head.Val != prev.Val {
+			return false
+		}
+		head = head.Next
+		prev = prev.Next
+	}
+
+	// Если мы дошли до этой точки, то список является палиндромом.
 	return true
 }
