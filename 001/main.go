@@ -36,7 +36,7 @@ type ListNode struct {
 func main() {
 	var task string = "1-2-3"
 	//printList(buildList(task))
-	println(task, isPalindrome(buildList(task)))
+	/*println(task, isPalindrome(buildList(task)))
 	task = "1"
 	println(task, isPalindrome(buildList(task)))
 
@@ -62,9 +62,11 @@ func main() {
 	println(task, isPalindrome(buildList(task)))
 
 	task = "1-2-3-4"
-	println(task, isPalindrome(buildList(task)))
+	println(task, isPalindrome(buildList(task)))*/
 
 	task = "1-1-2-1"
+	task = "1-2-3-4"
+	task = "1-2-2-1"
 	println(task, isPalindrome(buildList(task)))
 }
 
@@ -117,59 +119,48 @@ func isPalindrome(head *ListNode) bool {
 	println("List Length is ", listLen)
 
 	var secondHead *ListNode
-	if listLen > 2 {
+	if listLen >= 2 {
 		//revert second part from middle
 		var prevNode *ListNode
-		var nextNode *ListNode
+		var test123 *ListNode
+		//var nextNode *ListNode
 		currentNode = head
 		println("revert")
-		for i := 0; currentNode.Next != nil; i++ {
-			//println(currentNode.Val)
-			if i == listLen/2-1 {
-				nextNode = currentNode.Next.Next
-				currentNode.Next.Next = nil
-				prevNode = currentNode.Next
-				currentNode.Next = nil
-				currentNode = nextNode
-			} else if i > listLen/2-1 {
-				nextNode = currentNode.Next
-				currentNode.Next = prevNode
-				prevNode = currentNode
-				currentNode = nextNode
-			}
-			//prevNode = currentNode
-			if i < listLen/2-1 {
+		for i := 0; i < listLen; i++ {
+			println(currentNode.Val)
+			if i < listLen/2 {
 				currentNode = currentNode.Next
+			} else {
+				//revert second part
+				secondHead, test123, currentNode, prevNode = currentNode, prevNode, currentNode.Next, currentNode
+				secondHead.Next = test123
 			}
 		}
-		secondHead = currentNode
-		secondHead.Next = prevNode
-	} else if listLen == 2 {
-		//only 2 nodes
-		secondHead = head.Next
-		head.Next = nil
+		//secondHead = currentNode
+		//secondHead.Next = prevNode
+		if 1 < 0 {
+			println(prevNode.Val)
+		}
 	} else if listLen == 1 {
 		return true
 	}
-
 	printList(head)
 	printList(secondHead)
+	//return false
 
 	// compare 2 parts one by one
-	if listLen/2 >= 2 {
+	if listLen >= 2 {
+		println("-- compare --")
 		currentNode = head
 		secondCurrentNode := secondHead
-		for currentNode.Next != nil {
-			//println(currentNode.Val, secondCurrentNode.Val)
+		for i := 0; i < listLen/2; i++ {
+			println(currentNode.Val, secondCurrentNode.Val)
 			if currentNode.Val == secondCurrentNode.Val {
 				secondCurrentNode = secondCurrentNode.Next
 				currentNode = currentNode.Next
 			} else {
 				return false
 			}
-		}
-		if currentNode.Val != secondCurrentNode.Val {
-			return false
 		}
 	} else if secondHead.Val == head.Val {
 		return true
