@@ -64,8 +64,8 @@ func main() {
 	task = "1-2-3-4"
 	println(task, isPalindrome(buildList(task)))*/
 
-	task = "1-1-2-1"
-	task = "1-2-3-4"
+	//task = "1-1-2-1"
+	//task = "1-2-3-4"
 	task = "1-2-2-1"
 	println(task, isPalindrome(buildList(task)))
 }
@@ -111,61 +111,51 @@ func createNewNode(value string, nextNode *ListNode) *ListNode {
 func isPalindrome(head *ListNode) bool {
 	currentNode := head
 	var listLen int = 1
+	var secondHead *ListNode
+
 	//count list length
 	for currentNode.Next != nil {
 		listLen++
 		currentNode = currentNode.Next
 	}
-	println("List Length is ", listLen)
+	//println("List Length is ", listLen)
 
-	var secondHead *ListNode
 	if listLen >= 2 {
 		//revert second part from middle
-		var prevNode *ListNode
-		var test123 *ListNode
-		//var nextNode *ListNode
+		var nextNode *ListNode
 		currentNode = head
-		println("revert")
+		//println("revert")
 		for i := 0; i < listLen; i++ {
-			println(currentNode.Val)
+			//println(currentNode.Val)
 			if i < listLen/2 {
 				currentNode = currentNode.Next
 			} else {
 				//revert second part
-				secondHead, test123, currentNode, prevNode = currentNode, prevNode, currentNode.Next, currentNode
-				secondHead.Next = test123
+				secondHead, nextNode, currentNode = currentNode, secondHead, currentNode.Next
+				secondHead.Next = nextNode
 			}
 		}
-		//secondHead = currentNode
-		//secondHead.Next = prevNode
-		if 1 < 0 {
-			println(prevNode.Val)
-		}
-	} else if listLen == 1 {
+	} else {
 		return true
 	}
-	printList(head)
-	printList(secondHead)
+
+	//printList(head)
+	//printList(secondHead)
 	//return false
 
 	// compare 2 parts one by one
-	if listLen >= 2 {
-		println("-- compare --")
-		currentNode = head
-		secondCurrentNode := secondHead
-		for i := 0; i < listLen/2; i++ {
-			println(currentNode.Val, secondCurrentNode.Val)
-			if currentNode.Val == secondCurrentNode.Val {
-				secondCurrentNode = secondCurrentNode.Next
-				currentNode = currentNode.Next
-			} else {
-				return false
-			}
+
+	//println("-- compare --")
+	currentNode = head
+	//secondCurrentNode := secondHead
+	for i := 0; i < listLen/2; i++ {
+		//	println(currentNode.Val, secondCurrentNode.Val)
+		if currentNode.Val == secondHead.Val {
+			secondHead = secondHead.Next
+			currentNode = currentNode.Next
+		} else {
+			return false
 		}
-	} else if secondHead.Val == head.Val {
-		return true
-	} else {
-		return false
 	}
 
 	return true
@@ -278,5 +268,46 @@ func isPalindromeGpt(head *ListNode) bool {
 	}
 
 	// Если мы дошли до этой точки, то список является палиндромом.
+	return true
+}
+
+func SisPalindrome(head *ListNode) bool {
+	currentNode := head
+	var listLen int = 1
+	var secondHead *ListNode
+
+	//count list length
+	for currentNode.Next != nil {
+		listLen++
+		currentNode = currentNode.Next
+	}
+	if listLen >= 2 {
+		//revert second part from middle
+		var nextNode *ListNode
+		currentNode = head
+		for i := 0; i < listLen; i++ {
+			if i < listLen/2 {
+				currentNode = currentNode.Next
+			} else {
+				//revert second part
+				secondHead, nextNode, currentNode = currentNode, secondHead, currentNode.Next
+				secondHead.Next = nextNode
+			}
+		}
+	} else {
+		return true
+	}
+
+	// compare 2 parts one by one
+	currentNode = head
+	for i := 0; i < listLen/2; i++ {
+		if currentNode.Val == secondHead.Val {
+			secondHead = secondHead.Next
+			currentNode = currentNode.Next
+		} else {
+			return false
+		}
+	}
+
 	return true
 }

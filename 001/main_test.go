@@ -137,7 +137,7 @@ func TestIsPalindromeGpt(t *testing.T) {
 	for _, testcase := range testTable {
 		//act
 		t.Log(testcase.expected, testcase.task)
-		result := isPalindromeGpt(buildList(testcase.task))
+		result := isPalindrome(buildList(testcase.task))
 		//assert
 		if result != testcase.expected {
 			t.Errorf("Incorrect Result. Expect %t, got %t", testcase.expected, result)
