@@ -34,6 +34,27 @@ func main() {
 
 func fizzBuzz(n int) []string {
 	result := make([]string, n)
+
+	for i := 1; i <= n; i++ {
+		result[i-1] = strconv.Itoa(i)
+	}
+
+	for i := 3; i <= n; i += 3 {
+		result[i-1] = "Fizz"
+	}
+
+	for i := 5; i <= n; i += 5 {
+		if result[i-1] == "Fizz" {
+			result[i-1] = "FizzBuzz"
+		} else {
+			result[i-1] = "Buzz"
+		}
+	}
+	return result
+}
+
+func oldfizzBuzz(n int) []string {
+	result := make([]string, n)
 	var isFizz, isBuzz bool
 	for i := 1; i <= n; i++ {
 		isFizz = ((i % 3) == 0)
