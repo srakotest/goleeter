@@ -62,7 +62,7 @@ func gcdOfStrings(str1 string, str2 string) string {
 		return divider
 	}
 
-	for b := len(shortStr); b > 0; b-- {
+	for b := len(shortStr) / 2; b > 0; b-- {
 		divider = findDivider(shortStr[b:], shortStr[:b])
 		if divider != "" {
 
