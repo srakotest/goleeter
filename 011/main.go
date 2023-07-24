@@ -41,7 +41,7 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 		return true
 	}
 
-	for i := 0; i < len(flowerbed); i += 2 {
+	for i := 0; i < len(flowerbed); i++ {
 
 		if flowerbed[i] == 0 && (i == len(flowerbed)-1 || i < len(flowerbed)-1 && flowerbed[i+1] == 0) && (i == 0 || i > 0 && flowerbed[i-1] == 0) {
 			if n == 1 {
@@ -50,6 +50,10 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 				flowerbed[i] = 1
 				n--
 			}
+		}
+
+		if flowerbed[i] == 1 {
+			i++
 		}
 	}
 

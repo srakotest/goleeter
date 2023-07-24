@@ -62,6 +62,14 @@ func TestCanPlaceFlowers(t *testing.T) {
 				1},
 			expected: false,
 		},
+		{
+			task: struct {
+				flowerbed    []int
+				extraFlowers int
+			}{[]int{0, 1, 0, 1, 0, 1, 0, 0},
+				1},
+			expected: true,
+		},
 	}
 
 	for _, testcase := range testTable {
